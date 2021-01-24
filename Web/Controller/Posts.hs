@@ -20,6 +20,8 @@ instance Controller PostsController where
 
     action ShowPostAction { postId } = do
         post <- fetch postId
+            >>= pure . modify #comments (orderByDesc  #createdAt)
+            >>= fetchRelated #comments
         render ShowView { .. }
 
     action EditPostAction { postId } = do
@@ -35,7 +37,7 @@ instance Controller PostsController where
                 Right post -> do
                     post <- post |> updateRecord
                     setSuccessMessage "Post updated"
-                    redirectTo EditPostAction { .. }
+                    redirectTo ShowPostAction { .. } 
 
     action CreatePostAction = do
         let post = newRecord @Post
@@ -46,7 +48,7 @@ instance Controller PostsController where
                 Right post -> do
                     post <- post |> createRecord
                     setSuccessMessage "Post created"
-                    redirectTo PostsAction
+                    redirectTo ShowPostAction { postId = get #id post }
 
     action DeletePostAction { postId } = do
         post <- fetch postId

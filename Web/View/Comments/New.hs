@@ -1,7 +1,7 @@
 module Web.View.Comments.New where
 import Web.View.Prelude
 
-data NewView = NewView { comment :: Comment }
+data NewView = NewView { comment :: Comment, post :: Post }
 
 instance View NewView where
     html NewView { .. } = [hsx|
@@ -11,14 +11,14 @@ instance View NewView where
                 <li class="breadcrumb-item active">New Comment</li>
             </ol>
         </nav>
-        <h1>New Comment</h1>
+        <h3>New Comment for <q>{get #title post}</q></h3>
         {renderForm comment}
     |]
 
 renderForm :: Comment -> Html
 renderForm comment = formFor comment [hsx|
-    {(textField #postId)}
+    {(hiddenField #postId)}
     {(textField #author)}
-    {(textField #body)}
+    {(textareaField #body)}
     {submitButton}
 |]

@@ -20,8 +20,8 @@ data PostsController
     deriving (Eq, Show, Data)
 
 data CommentsController
-    = CommentsAction
-    | NewCommentAction
+    = CommentsAction 
+    | NewCommentAction { postId :: !(Id Post)}
     | ShowCommentAction { commentId :: !(Id Comment) }
     | CreateCommentAction
     | EditCommentAction { commentId :: !(Id Comment) }
