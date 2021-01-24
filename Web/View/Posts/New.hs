@@ -1,5 +1,6 @@
 module Web.View.Posts.New where
 import Web.View.Prelude
+import Application.Helper.View (markdownHelpText)
 
 data NewView = NewView { post :: Post }
 
@@ -18,6 +19,6 @@ instance View NewView where
 renderForm :: Post -> Html
 renderForm post = formFor post [hsx|
     {(textField #title)}
-    {(textField #body)}
+    {(textareaField #body) { helpText = markdownHelpText }}
     {submitButton}
 |]
