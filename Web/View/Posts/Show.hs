@@ -11,6 +11,7 @@ instance View ShowView where
                 <li class="breadcrumb-item active">Show Post</li>
             </ol>
         </nav>
-        <h1>Show Post</h1>
-        <p>{post}</p>
+        <h1>{ get #title post}</h1>
+        <p>{ get #createdAt post |> timeAgo}</p>
+        <p>{ get #body post}</p>
     |]

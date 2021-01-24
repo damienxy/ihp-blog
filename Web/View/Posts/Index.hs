@@ -18,7 +18,6 @@ instance View IndexView where
                         <th>Post</th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>{forEach posts renderPost}</tbody>
@@ -29,8 +28,7 @@ instance View IndexView where
 
 renderPost post = [hsx|
     <tr>
-        <td>{post}</td>
-        <td><a href={ShowPostAction (get #id post)}>Show</a></td>
+        <td><a href={ShowPostAction (get #id post)}>{get #title post}</a></td>
         <td><a href={EditPostAction (get #id post)} class="text-muted">Edit</a></td>
         <td><a href={DeletePostAction (get #id post)} class="js-delete text-muted">Delete</a></td>
     </tr>
